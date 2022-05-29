@@ -4,41 +4,16 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 public class Main {
-    private static final URI WORDS_URI =
-            URI.create("https://random-words-api.vercel.app/word");
 
-    public static String getRandomWord() throws Exception {
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(WORDS_URI)
-                .GET()
-                .build();
-
-        return client.send(request, ofString())
-                .body();
-    }
-
-
-    public static String getSongFromWord(String word) throws Exception {
-        HttpClient client = HttpClient.newHttpClient();
-        URI songUri = URI.create("https://musicbrainz.org/ws/2/recording/?fmt=json&query=recording:" + word);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(songUri)
-                .GET()
-                .build();
-
-        return client.send(request, ofString())
-                .body();
-    }
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please, enter any integer number from 5 to 20: ");
@@ -54,7 +29,8 @@ public class Main {
         while (count < i){
             String word;
             do {
-                String randomWord = getRandomWord();
+
+                String randomWord = RandomWordReader.getRandomWord();
                 JSONArray response = new JSONArray(randomWord);
                 word = response.getJSONObject(0).getString("word");
             } while (randomWords.contains(word));
@@ -67,7 +43,7 @@ public class Main {
 
         for (String randomWord: randomWords){
             System.out.println("Recording info from: " + randomWord);
-            String songFromWord = getSongFromWord(randomWord);
+            String songFromWord = SongReader.getSongFromWord(randomWord);
             JSONObject songResponse = new JSONObject(songFromWord);
             JSONArray recordings = songResponse.getJSONArray("recordings");
             if (!recordings.isEmpty()) {
