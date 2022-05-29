@@ -1,11 +1,6 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import static java.net.http.HttpResponse.BodyHandlers.ofString;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,6 +35,7 @@ public class Main {
         System.out.println("Those are your random words:");
         System.out.println(randomWords);
         System.out.println();
+
 
         for (String randomWord: randomWords){
             System.out.println("Recording info from: " + randomWord);
